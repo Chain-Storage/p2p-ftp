@@ -15,8 +15,8 @@
   "main": "app.ts",
   "license": "MIT",
   "scripts": {
-    "tcpServer": "ts-node-dev src/ftp/tcpServer.ts",
-    "createAccount": "ts-node-dev src/p2p/createAccount.ts",
+    "ftpServer": "ts-node-dev src/ftp/ftp.ts",
+    "createAccount": "ts-node-dev src/utils/db.ts",
     "start": "node dist/app.js",
     "build": "npx tsc",
     "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""

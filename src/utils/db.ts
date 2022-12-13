@@ -1,24 +1,25 @@
 import { Level } from "level";
 
-export async function createDb(
+// Create Peer with calling getPeers Function
+export async function createPeer(
   dbInput: string,
   typeInput: any,
   key: string,
-  valueInput: string,
-  get: string
+  valueInput: string
 ) {
   // Create a database
   const db = new Level(dbInput, { valueEncoding: "json" });
+  db.put(key, valueInput);
 
   // Add multiple entries
   await db.batch([{ type: typeInput, key: key, value: valueInput }]);
 
   // Get value of key 'a': 1
-  const value = await db.get(get);
+  const value = await db.getMany([key]);
   console.log(value);
 }
 
-export async function getUser(dbInput: string, valueInput: string) {
+export async function getPeers(dbInput: string, valueInput: string) {
   // Create a database
   const db = new Level(dbInput, { valueEncoding: "json" });
 
@@ -27,4 +28,5 @@ export async function getUser(dbInput: string, valueInput: string) {
   console.log(value);
 }
 
-getUser("userAccount", "userIp");
+// Only For Test User Case
+//createPeer("userAccount", "put", "userIp", "name");
