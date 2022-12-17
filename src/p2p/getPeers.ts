@@ -1,8 +1,12 @@
 import os, { networkInterfaces } from "os";
 
+interface resultsI extends String {
+  wlp8s0: any;
+}
+
 export function userIp(): string {
   const nets: any = networkInterfaces();
-  const results: any = Object.create(null);
+  const results: resultsI | any = Object.create(null);
 
   for (const name of Object.keys(nets)) {
     for (const net of nets[name]) {
@@ -19,6 +23,7 @@ export function userIp(): string {
   }
 
   console.log(results);
+
   let hostUrl: string = "";
   const port = 9001;
 
@@ -27,7 +32,7 @@ export function userIp(): string {
   } else if (os.type() === "Linux") {
     hostUrl = `ftp://${results.wlp8s0[0]}:` + port;
   } else {
-    console.error("This ftp server only support Windows");
+    console.error("This ftp server only support Windows and Linux");
   }
 
   console.log(hostUrl);
