@@ -1,5 +1,5 @@
 {
-  "name": "p2p-ftp",
+  "name": "etruschain-p2p-ftp",
   "author": {
     "email": "yusufmirza55@hotmail.com",
     "name": "Yusuf 'Yurikaza' Mirza Pıçakcı",
@@ -8,6 +8,9 @@
   "keywords": [
     "web3",
     "ftp",
+    "tcp",
+    "p2pCloud",
+    "EtrusChain",
     "cloud"
   ],
   "licenses": [],
@@ -16,17 +19,17 @@
   "license": "MIT",
   "scripts": {
     "ftpServer": "ts-node-dev src/ftp/ftp.ts",
-    "createAccount": "ts-node-dev src/utils/db.ts",
+    "createAccount": "ts-node-dev src/accounts/account.ts",
     "start": "node dist/app.js",
     "build": "npx tsc",
     "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "dependencies": {
     "ftp-srv": "^4.6.2",
-    "level": "^8.0.0",
-    "level-sublevel": "^6.6.5"
+    "level": "^8.0.0"
   },
   "devDependencies": {
+    "level-sublevel": "^6.6.5",
     "@types/level-sublevel": "^0.0.33",
     "@types/body-parser": "^1.19.2",
     "@types/compression": "^1.7.2",
@@ -54,6 +57,9 @@
     "npm": "<8"
   },
   "bin": {
-    "runNode": "./src/ftp/ftpServer"
+    "runNode": "./src/ftp/ftpServer",
+    "init": "./src/accounts/account",
+    "get": "./src/accounts/createAccount",
+    "add": "./src/accounts/createAccount"
   }
 }

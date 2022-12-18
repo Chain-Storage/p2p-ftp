@@ -4,7 +4,7 @@ interface resultsI extends String {
   wlp8s0: any;
 }
 
-export function userIp(): string {
+export function userIp(): string[] {
   const nets: any = networkInterfaces();
   const results: resultsI | any = Object.create(null);
 
@@ -25,17 +25,20 @@ export function userIp(): string {
   console.log(results);
 
   let hostUrl: string = "";
+  let userIp: string = "";
   const port = 9001;
 
   if (os.type() === "Windows_NT") {
     hostUrl = `ftp://${results["VirtualBox Host-Only Network"][0]}:` + port;
+    userIp = results["VirtualBox Host-Only Network"][0];
   } else if (os.type() === "Linux") {
     hostUrl = `ftp://${results.wlp8s0[0]}:` + port;
+    userIp = results.wlp8s0[0];
   } else {
     console.error("This ftp server only support Windows and Linux");
   }
 
   console.log(hostUrl);
 
-  return hostUrl;
+  return [hostUrl, userIp];
 }

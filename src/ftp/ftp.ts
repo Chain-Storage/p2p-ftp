@@ -6,7 +6,7 @@ import fs from "fs";
 import { userIp } from "../p2p/getPeers";
 
 const ftpServer = new FtpSrv({
-  url: userIp(),
+  url: userIp()[0],
   anonymous: true,
 });
 
@@ -15,7 +15,6 @@ function closeServer() {
     console.log("Server Closed");
   });
 }
-
 ftpServer.on(
   "login",
   (
@@ -32,7 +31,7 @@ ftpServer.on(
     if (
       (ftpLogin.username === computerName &&
         ftpLogin.password === process.env.PASSWORD) ||
-      "anonymous"
+      "MirzaYusufulOnur23041920.27051960.09031971"
     ) {
       const dir = `${__dirname}/files`;
 
