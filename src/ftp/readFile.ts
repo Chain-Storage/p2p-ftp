@@ -25,7 +25,29 @@ export async function readFiles(pathName: string) {
   }
 
   const fileData = mySplit(buffer, -1)[0];
+  const fileDataLenght1 = Math.trunc(fileData.length / 6);
+
+  const fileDataLenght2 =
+    Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght1);
+
+  const fileDataLenght3 =
+    Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght2);
+
+  const fileDataLenght4 =
+    Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght3);
+
+  const fileDataLenght5 =
+    Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght4);
+
+  const fileDataLenght6 = fileData.length;
+
   console.log(fileData);
+  console.log(fileDataLenght1);
+  console.log(fileDataLenght2);
+  console.log(fileDataLenght3);
+  console.log(fileDataLenght4);
+  console.log(fileDataLenght5);
+  console.log(fileDataLenght6);
 }
 
 readFiles(__dirname + "/files/Notion Setup 2.0.38.exe");

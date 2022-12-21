@@ -28,20 +28,6 @@ console.log("Your identity: " + myId.toString("hex"));
 
 // reference to redline interface
 let rl: any;
-/**
- * Function for safely call console.log with readline interface active
- */
-function log() {
-  if (rl) {
-    rl.clearLine();
-    rl.close();
-    rl = undefined;
-  }
-  for (let i = 0, len = arguments.length; i < len; i++) {
-    console.log(arguments[i]);
-  }
-  askUser();
-}
 
 /*
  * Function to get text input from user and send it to other peers --->>>
