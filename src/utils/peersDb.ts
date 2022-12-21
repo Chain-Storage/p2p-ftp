@@ -36,9 +36,10 @@ export async function createPeer(userId: string) {
 }
 
 async function checkPeer() {
-  const user: any = User.findOne({ userId: userIp()[1] }).exec();
+  const user: any = User.findOne({ userId: userIp()[1] });
 
   if (typeof user === "undefined") {
+    console.error("This device already have in Db");
     return false;
   }
 
