@@ -43,17 +43,20 @@ function userIp() {
     }
     console.log(results);
     let hostUrl = "";
+    let userIp = "";
     const port = 9001;
     if (os_1.default.type() === "Windows_NT") {
         hostUrl = `ftp://${results["VirtualBox Host-Only Network"][0]}:` + port;
+        userIp = results["VirtualBox Host-Only Network"][0];
     }
     else if (os_1.default.type() === "Linux") {
         hostUrl = `ftp://${results.wlp8s0[0]}:` + port;
+        userIp = results.wlp8s0[0];
     }
     else {
-        console.error("This ftp server only support Windows");
+        console.error("This ftp server only support Windows and Linux");
     }
     console.log(hostUrl);
-    return hostUrl;
+    return [hostUrl, userIp];
 }
 exports.userIp = userIp;
