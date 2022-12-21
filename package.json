@@ -27,11 +27,14 @@
     "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "dependencies": {
+    "@types/get-port": "^4.2.0",
+    "dat-swarm-defaults": "^1.0.3",
+    "discovery-swarm": "^6.1.0",
     "ftp-srv": "^4.6.2",
+    "get-port": "^6.1.2",
     "mongoose": "^6.8.1"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.11.97",
     "@types/body-parser": "^1.19.2",
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.12",
@@ -41,13 +44,13 @@
     "@types/hpp": "^0.2.2",
     "@types/level": "^6.0.1",
     "@types/level-sublevel": "^0.0.33",
+    "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
     "@types/nedb": "^1.8.12",
     "@types/node": "^18.11.9",
     "@types/rocksdb": "^3.0.1",
     "body-parser": "^1.20.1",
     "compression": "^1.7.4",
-    "nedb": "^1.8.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
@@ -56,6 +59,7 @@
     "level": "^8.0.0",
     "level-sublevel": "^6.6.5",
     "morgan": "^1.10.0",
+    "nedb": "^1.8.0",
     "rocksdb": "^5.2.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.9.3"
