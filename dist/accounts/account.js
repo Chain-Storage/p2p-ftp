@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAccount = exports.hostName = void 0;
-const db_1 = require("../utils/db");
+const peersDb_1 = require("../utils/peersDb");
 const getPeers_1 = require("../p2p/getPeers");
 const crypto_1 = __importDefault(require("crypto"));
 const os_1 = __importDefault(require("os"));
@@ -22,7 +22,7 @@ function createAccount() {
     }
     const userId = crypto_1.default.createHash("sha256").update((0, getPeers_1.userIp)()[1]).digest("hex");
     console.log(userId);
-    (0, db_1.createPeer)("Sc" + userId);
+    (0, peersDb_1.createPeer)("Sc" + userId);
     return userId.toString();
 }
 exports.createAccount = createAccount;

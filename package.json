@@ -22,12 +22,12 @@
     "createAccount": "ts-node-dev src/accounts/account.ts",
     "db": "ts-node-dev src/utils/db.ts",
     "readFiles": "ts-node-dev src/ftp/readFile.ts",
+    "tcp": "ts-node-dev src/tcp/tcp.ts",
     "start": "node dist/app.js",
     "build": "npx tsc",
     "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "dependencies": {
-    "@types/get-port": "^4.2.0",
     "dat-swarm-defaults": "^1.0.3",
     "discovery-swarm": "^6.1.0",
     "ftp-srv": "^4.6.2",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@types/body-parser": "^1.19.2",
     "@types/compression": "^1.7.2",
+    "@types/get-port": "^4.2.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.14",
     "@types/express-fileupload": "^1.4.1",

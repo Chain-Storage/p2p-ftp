@@ -3,14 +3,10 @@ import Swarm from "discovery-swarm";
 import defaults from "dat-swarm-defaults";
 import getPort from "get-port";
 import readline from "readline";
-import { connect, model, Schema } from "mongoose";
-import fs from "fs";
+import { model, Schema } from "mongoose";
+import { runDb } from "../utils/runDb";
 
-main().catch((err) => console.log(err));
-
-async function main() {
-  await connect("mongodb://localhost:27017/digiathonProject");
-}
+runDb();
 
 const kittySchema = new Schema({
   name: String,
@@ -48,8 +44,7 @@ function log() {
 }
 
 /*
- * Function to get text input from user and send it to other peers
- * Like a chat :)
+ * Function to get text input from user and send it to other peers --->>>
  */
 const askUser = async () => {
   rl = readline.createInterface({
@@ -98,7 +93,7 @@ const sw = Swarm(config);
    * The channel we are connecting to.
    * Peers should discover other peers in this channel
    */
-  sw.join("refi-digiathon-project-test-1");
+  sw.join("ethursChain-project-test-1");
 
   sw.on("connection", (conn: any, info: any) => {
     // Connection id
@@ -121,42 +116,6 @@ const sw = Swarm(config);
       }
 
       //"/Users/yusuf/Downloads/1660591078975-_1_.png"
-      fs.readFile(data.toString(), "utf8", (err, data) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        console.log(`received data: ${data.toString().length}`);
-        console.log(`received data per peer: ${data.toString().length / 4}`);
-        console.log(
-          `First Peer: ${data.toString().substr(1, data.toString().length / 4)}`
-        );
-        console.log(
-          `Second Peer: ${data
-            .toString()
-            .substr(
-              data.toString().length / 4 + 1,
-              (data.toString().length / 4) * 2
-            )}`
-        );
-        console.log(
-          `Third Peer: ${data
-            .toString()
-            .substr(
-              (data.toString().length / 4) * 2 + 1,
-              (data.toString().length / 4) * 3
-            )}`
-        );
-        console.log(
-          `Fourth Peer: ${data
-            .toString()
-            .substr(
-              (data.toString().length / 4) * 3 + 1,
-              data.toString().length / 4
-            )}`
-        );
-      });
-
       findKittens();
       // Here we handle incomming messages
     });
