@@ -1,6 +1,13 @@
 import { createPeer } from "../utils/db";
 import { userIp } from "../p2p/getPeers";
 import crypto from "crypto";
+import os from "os";
+
+export function hostName(): string {
+  const computerName: string = os.hostname();
+
+  return computerName;
+}
 
 // İnit Comment
 export function createAccount(): string {
@@ -14,11 +21,9 @@ export function createAccount(): string {
   const userId = crypto.createHash("sha256").update(userIp()[1]).digest("hex");
   console.log(userId);
 
-  createPeer(
-    __dirname + "/userAccount",
-    "peer-" + perrsArray.length,
-    "Sc" + userId
-  );
+  createPeer("Sc" + userId);
 
   return userId.toString();
 }
+
+createAccount();

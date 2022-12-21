@@ -1,52 +1,58 @@
-import { Level } from "level";
-import path from "path";
+import { Schema, model, connect } from "mongoose";
+import { hostName } from "../accounts/account";
+import { readFiles } from "../ftp/readFile";
 import { userIp } from "../p2p/getPeers";
 
-// Create Peer with calling getPeers Function
-export async function createPeer(
-  dbDir: string,
-  key: string,
-  valueInput: string
-) {
-  // Create a database
-  const dbPath = path.join(__dirname, dbDir);
-
-  const options = {
-    keyEncoding: "binary",
-    valueEncoding: "json",
-  };
-
-  const db = new Level(dbPath, options);
-
-  db.put(key, valueInput);
-
-  // Get value of key 'a': 1
-  const value = await db.get(key);
-
-  // Add multiple entries
-  await db.batch([
-    { type: "put", key: "userIp-" + value.length, value: userIp()[1] },
-  ]);
-
-  console.log(value);
+interface IUser {
+  hostName: string;
+  userIp: string;
+  userId: string;
 }
 
-export async function getPeers(dbDir: string, valueInput: string) {
-  // Create a database
-  const dbPath = path.join(__dirname, dbDir);
+// 2. Create a Schema corresponding to the document interface.
+const userSchema = new Schema<IUser>({
+  hostName: { type: String, required: true },
+  userIp: { type: String, required: true },
+  userId: { type: String, required: true },
+});
 
-  const options = {
-    keyEncoding: "binary",
-    valueEncoding: "json",
-  };
+// 3. Create a Model.
+const User = model<IUser>("User", userSchema);
 
-  const db = new Level(dbPath, options);
+export async function createPeer(userId: string) {
+  // 4. Connect to MongoDB
+  await connect("mongodb://localhost:27017/ethursChain");
 
-  const value = await db.get(valueInput);
-  console.log(value.length);
+  const user = new User({
+    hostName: hostName(),
+    userIp: userIp()[1],
+    userId: userId,
+  });
+  await user.save();
+
+  console.log(user);
 }
 
-// Only For Test User Case
-//createPeer("userAccount", "userIp-1", "<userIp>");
+interface IFile {
+  buffer: string;
+}
 
-getPeers("userAccount", "userIp-1");
+// 2. Create a Schema corresponding to the document interface.
+const fileSchema = new Schema<IFile>({
+  buffer: { type: String, required: true },
+});
+
+// 3. Create a Model.
+const File = model<IFile>("File", fileSchema);
+
+export async function createFile(userId: string) {
+  // 4. Connect to MongoDB
+  await connect("mongodb://localhost:27017/ethursChain");
+
+  const file = new File({
+    buffer: readFiles(__dirname + "/files/text.txt"),
+  });
+  await file.save();
+
+  console.log(file);
+}
