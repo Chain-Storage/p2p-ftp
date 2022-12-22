@@ -1,12 +1,22 @@
+"use strict";
+
 import crypto from "crypto";
 import Swarm from "discovery-swarm";
 import defaults from "dat-swarm-defaults";
 import getPort from "get-port";
 import readline from "readline";
-import { model, Schema } from "mongoose";
-import { runDb } from "../utils/runDb";
+import { connect, model, Schema } from "mongoose";
 
-runDb();
+export async function runDb() {
+  // 4. Connect to MongoDB
+  await connect("mongodb://localhost:27017/ethursChain")
+    .then((data) => {
+      console.log("Database run succesfully");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 const kittySchema = new Schema({
   name: String,
@@ -18,7 +28,7 @@ const Kitten = model("File", kittySchema);
  * Here we will save our TCP peer connections
  * using the peer id as key: { peer_id: TCP_Connection }
  */
-const peers: any = {};
+const peers = {};
 // Counter for connections, used for identify connections
 let connSeq = 0;
 
@@ -27,7 +37,7 @@ const myId = crypto.randomBytes(32);
 console.log("Your identity: " + myId.toString("hex"));
 
 // reference to redline interface
-let rl: any;
+let rl;
 
 /*
  * Function to get text input from user and send it to other peers --->>>
@@ -38,7 +48,7 @@ const askUser = async () => {
     output: process.stdout,
   });
 
-  rl.question("Send message: ", (message: any) => {
+  rl.question("Send message: ", (message) => {
     // Broadcast to peers
     for (let id in peers) {
       console.log(peers.length);
@@ -81,7 +91,7 @@ const sw = Swarm(config);
    */
   sw.join("ethursChain-project-test-1");
 
-  sw.on("connection", (conn: any, info: any) => {
+  sw.on("connection", (conn, info) => {
     // Connection id
     const seq = connSeq;
 
@@ -94,7 +104,7 @@ const sw = Swarm(config);
       } catch (exception) {}
     }
 
-    conn.on("data", (data: any) => {
+    conn.on("data", (data) => {
       async function findKittens() {
         const silence = new Kitten({ name: data.toString() });
         await silence.save();
