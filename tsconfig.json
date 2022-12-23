@@ -77,9 +77,9 @@
 
     /* Type Checking */
     "strict": true /* Enable all strict type-checking options. */,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "*": ["@types/*"]
+      "*": ["src/@types/*"]
     },
     // "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     // "strictNullChecks": true,                         /* When type checking, take into account 'null' and 'undefined'. */
@@ -102,6 +102,6 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": false /* Skip type checking all .d.ts files. */
   }
 }

@@ -14,7 +14,6 @@
     "cloud"
   ],
   "licenses": [],
-  "type": "module",
   "version": "1.0.0",
   "main": "app.ts",
   "license": "MIT",
@@ -23,7 +22,7 @@
     "createAccount": "ts-node-dev src/accounts/account.ts",
     "db": "ts-node-dev src/utils/db.ts",
     "readFiles": "ts-node-dev src/ftp/readFile.ts",
-    "tcp": "nodemon src/tcp/tcp.js",
+    "tcp": "ts-node-dev src/tcp/tcp.ts",
     "start": "node dist/app.js",
     "build": "npx tsc",
     "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""

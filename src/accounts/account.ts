@@ -21,7 +21,7 @@ export function createAccount(): string {
   const userId = crypto.createHash("sha256").update(userIp()[1]).digest("hex");
   console.log(userId);
 
-  createPeer("Sc" + userId);
+  createPeer("Etr" + userId);
 
   return userId.toString();
 }

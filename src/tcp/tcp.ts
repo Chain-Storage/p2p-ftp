@@ -18,17 +18,17 @@ export async function runDb() {
     });
 }
 
-const kittySchema = new Schema({
-  name: String,
+const tcpSchema = new Schema({
+  userIp: String,
 });
 
-const Kitten = model("File", kittySchema);
+const Tcp = model("Tcp", tcpSchema);
 
 /**
  * Here we will save our TCP peer connections
  * using the peer id as key: { peer_id: TCP_Connection }
  */
-const peers = {};
+const peers: any = {};
 // Counter for connections, used for identify connections
 let connSeq = 0;
 
@@ -37,7 +37,7 @@ const myId = crypto.randomBytes(32);
 console.log("Your identity: " + myId.toString("hex"));
 
 // reference to redline interface
-let rl;
+let rl: any;
 
 /*
  * Function to get text input from user and send it to other peers --->>>
@@ -48,7 +48,7 @@ const askUser = async () => {
     output: process.stdout,
   });
 
-  rl.question("Send message: ", (message) => {
+  rl.question("Send message: ", (message: any) => {
     // Broadcast to peers
     for (let id in peers) {
       console.log(peers.length);
@@ -91,7 +91,7 @@ const sw = Swarm(config);
    */
   sw.join("ethursChain-project-test-1");
 
-  sw.on("connection", (conn, info) => {
+  sw.on("connection", (conn: any, info: any) => {
     // Connection id
     const seq = connSeq;
 
@@ -104,15 +104,15 @@ const sw = Swarm(config);
       } catch (exception) {}
     }
 
-    conn.on("data", (data) => {
-      async function findKittens() {
-        const silence = new Kitten({ name: data.toString() });
+    conn.on("data", (data: any) => {
+      async function findTcpUsers() {
+        const silence = new Tcp({ name: data.toString() });
         await silence.save();
         console.log(silence);
       }
 
       //"/Users/yusuf/Downloads/1660591078975-_1_.png"
-      findKittens();
+      findTcpUsers();
       // Here we handle incomming messages
     });
 
