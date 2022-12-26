@@ -2,12 +2,14 @@ import { readFile, readFileSync } from "fs";
 import path from "path";
 import { userIp } from "../p2p/peerIp";
 
-// ipfs add /fileFolader/file.jpeg
-
 interface IReadFiles {
-  peerOne: string;
-  peerTwo: string;
-  peerThree: string;
+  peerOne: string | number | any[];
+  peerTwo: string | number | any[];
+  peerThree: string | number | any[];
+  peerFour: string | number | any[];
+  peerFive: string | number | any[];
+  peerSix: string | number | any[];
+  peerFile: string | any[] | any;
 }
 
 export async function readFiles(pathName: string): Promise<IReadFiles> {
@@ -52,18 +54,8 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
 
   const fileDataLenght6 = fileData.length;
 
-  console.log(fileData);
-
-  console.log(fileName);
-  console.log(fileDataLenght1);
-  console.log(fileDataLenght2);
-  console.log(fileDataLenght3);
-  console.log(fileDataLenght4);
-  console.log(fileDataLenght5);
-  console.log(fileDataLenght6);
-
   // User Ip Array
-  const peersIpArray: string = (await userIp()).peerHostUrl;
+  //const peersIpArray: string = (await userIp()).peerHostUrl;
 
   // User Ip commnet
   let peersLenghtArray: number[] = [
@@ -76,39 +68,24 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
     fileDataLenght6,
   ];
 
-  console.log(fileData.length);
-  let peersDatas: any[] = [];
+  console.log(fileData);
 
-  for (let index = 0; index < peersLenghtArray.length; index++) {
-    let elementFirst = peersLenghtArray[index] as number;
-    let elementSecond = peersLenghtArray[index + 1] as number;
-
-    console.log(elementFirst, elementSecond);
-
-    if (elementFirst === 0) {
-      for (elementFirst; elementFirst < elementSecond; elementFirst++) {
-        const element = fileData[elementFirst] as number;
-        console.log(element);
-
-        peersDatas.push(element);
-      }
-    } else if (elementFirst > 0) {
-      for (elementFirst + 1; elementFirst < elementSecond; elementFirst++) {
-        const element = fileData[elementFirst] as number;
-        console.log(element);
-
-        peersDatas.push(element);
-      }
-    }
-  }
-
-  console.log(peersDatas);
-
-  return {
-    peerOne: "fileDataLenght1",
-    peerTwo: "fileDataLenght1",
-    peerThree: "",
+  let peersObject: IReadFiles = {
+    peerOne: fileData.slice(0, fileDataLenght1),
+    peerTwo: fileData.slice(fileDataLenght1, fileDataLenght2),
+    peerThree: fileData.slice(fileDataLenght2, fileDataLenght3),
+    peerFour: fileData.slice(fileDataLenght3, fileDataLenght4),
+    peerFive: fileData.slice(fileDataLenght4, fileDataLenght5),
+    peerSix: fileData.slice(fileDataLenght5, fileDataLenght6),
+    peerFile: {
+      fileName: fileName,
+      fileHash: "oxrtkgorekg",
+    },
   };
+
+  console.log(peersObject);
+
+  return peersObject;
 }
 
-readFiles(__dirname + "/files/.gitignore");
+readFiles(__dirname + "/files/Notion Setup 2.0.38.exe");
