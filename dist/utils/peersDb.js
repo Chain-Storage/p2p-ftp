@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPeer = void 0;
 const mongoose_1 = require("mongoose");
 const account_1 = require("../accounts/account");
-const getPeers_1 = require("../p2p/getPeers");
+const peerIp_1 = require("../p2p/peerIp");
 const runDb_1 = require("./runDb");
 (0, runDb_1.runDb)();
 // 2. Create a Schema corresponding to the document interface.
@@ -28,7 +28,7 @@ function createPeer(userId) {
         checkPeer();
         const user = new User({
             hostName: (0, account_1.hostName)(),
-            userIp: (0, getPeers_1.userIp)()[1],
+            userIp: (yield (0, peerIp_1.userIp)()).peerUserIp,
             userId: userId,
         });
         yield user.save();
@@ -38,7 +38,7 @@ function createPeer(userId) {
 exports.createPeer = createPeer;
 function checkPeer() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = User.findOne({ userId: (0, getPeers_1.userIp)()[1] });
+        const user = User.findOne({ userId: (yield (0, peerIp_1.userIp)()).peerUserIp });
         if (typeof user === "undefined") {
             console.error("This device already have in Db");
             return false;

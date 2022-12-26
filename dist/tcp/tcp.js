@@ -12,18 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.runDb = void 0;
 const crypto_1 = __importDefault(require("crypto"));
 const discovery_swarm_1 = __importDefault(require("discovery-swarm"));
 const dat_swarm_defaults_1 = __importDefault(require("dat-swarm-defaults"));
 const get_port_1 = __importDefault(require("get-port"));
 const readline_1 = __importDefault(require("readline"));
 const mongoose_1 = require("mongoose");
-const runDb_1 = require("../utils/runDb");
-(0, runDb_1.runDb)();
-const kittySchema = new mongoose_1.Schema({
-    name: String,
+function runDb() {
+    return __awaiter(this, void 0, void 0, function* () {
+        // 4. Connect to MongoDB
+        yield (0, mongoose_1.connect)("mongodb://localhost:27017/ethursChain")
+            .then((data) => {
+            console.log("Database run succesfully");
+        })
+            .catch((err) => {
+            console.log(err);
+        });
+    });
+}
+exports.runDb = runDb;
+const tcpSchema = new mongoose_1.Schema({
+    userIp: String,
 });
-const Kitten = (0, mongoose_1.model)("File", kittySchema);
+const Tcp = (0, mongoose_1.model)("Tcp", tcpSchema);
 /**
  * Here we will save our TCP peer connections
  * using the peer id as key: { peer_id: TCP_Connection }
@@ -36,23 +48,8 @@ const myId = crypto_1.default.randomBytes(32);
 console.log("Your identity: " + myId.toString("hex"));
 // reference to redline interface
 let rl;
-/**
- * Function for safely call console.log with readline interface active
- */
-function log() {
-    if (rl) {
-        rl.clearLine();
-        rl.close();
-        rl = undefined;
-    }
-    for (let i = 0, len = arguments.length; i < len; i++) {
-        console.log(arguments[i]);
-    }
-    askUser();
-}
 /*
- * Function to get text input from user and send it to other peers
- * Like a chat :)
+ * Function to get text input from user and send it to other peers --->>>
  */
 const askUser = () => __awaiter(void 0, void 0, void 0, function* () {
     rl = readline_1.default.createInterface({
@@ -107,15 +104,15 @@ const sw = (0, discovery_swarm_1.default)(config);
             catch (exception) { }
         }
         conn.on("data", (data) => {
-            function findKittens() {
+            function findTcpUsers() {
                 return __awaiter(this, void 0, void 0, function* () {
-                    const silence = new Kitten({ name: data.toString() });
+                    const silence = new Tcp({ name: data.toString() });
                     yield silence.save();
                     console.log(silence);
                 });
             }
             //"/Users/yusuf/Downloads/1660591078975-_1_.png"
-            findKittens();
+            findTcpUsers();
             // Here we handle incomming messages
         });
         conn.on("close", () => {

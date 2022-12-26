@@ -15,10 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.readFiles = void 0;
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
+const crypto_1 = __importDefault(require("crypto"));
 function readFiles(pathName) {
     return __awaiter(this, void 0, void 0, function* () {
         const filePath = path_1.default.join(pathName);
         const buffer = (0, fs_1.readFileSync)(filePath);
+        const fileName = path_1.default.basename(pathName);
+        console.log(fileName);
         console.log(buffer);
         function mySplit(a, delimiter) {
             const result = [];
@@ -44,13 +47,38 @@ function readFiles(pathName) {
         const fileDataLenght4 = Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght3);
         const fileDataLenght5 = Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght4);
         const fileDataLenght6 = fileData.length;
+        // User Ip Array
+        //const peersIpArray: string = (await userIp()).peerHostUrl;
+        // User Ip commnet
+        let peersLenghtArray = [
+            0,
+            fileDataLenght1,
+            fileDataLenght2,
+            fileDataLenght3,
+            fileDataLenght4,
+            fileDataLenght5,
+            fileDataLenght6,
+        ];
         console.log(fileData);
-        console.log(fileDataLenght1);
-        console.log(fileDataLenght2);
-        console.log(fileDataLenght3);
-        console.log(fileDataLenght4);
-        console.log(fileDataLenght5);
-        console.log(fileDataLenght6);
+        const fileHash = crypto_1.default
+            .createHash("sha256")
+            .update(buffer)
+            .digest("hex");
+        console.log(fileHash);
+        let peersObject = {
+            peerOne: fileData.slice(0, fileDataLenght1),
+            peerTwo: fileData.slice(fileDataLenght1, fileDataLenght2),
+            peerThree: fileData.slice(fileDataLenght2, fileDataLenght3),
+            peerFour: fileData.slice(fileDataLenght3, fileDataLenght4),
+            peerFive: fileData.slice(fileDataLenght4, fileDataLenght5),
+            peerSix: fileData.slice(fileDataLenght5, fileDataLenght6),
+            peerFile: {
+                fileName: fileName,
+                fileHash: "Ec" + fileHash,
+            },
+        };
+        console.log(peersObject);
+        return peersObject;
     });
 }
 exports.readFiles = readFiles;

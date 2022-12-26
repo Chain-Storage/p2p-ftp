@@ -1,11 +1,20 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAccount = exports.hostName = void 0;
 const peersDb_1 = require("../utils/peersDb");
-const getPeers_1 = require("../p2p/getPeers");
+const peerIp_1 = require("../p2p/peerIp");
 const crypto_1 = __importDefault(require("crypto"));
 const os_1 = __importDefault(require("os"));
 function hostName() {
@@ -15,15 +24,20 @@ function hostName() {
 exports.hostName = hostName;
 // İnit Comment
 function createAccount() {
-    let perrsArray = [];
-    for (let index = 0; index < perrsArray.length; index++) {
-        const element = perrsArray[index];
-        perrsArray.push(element);
-    }
-    const userId = crypto_1.default.createHash("sha256").update((0, getPeers_1.userIp)()[1]).digest("hex");
-    console.log(userId);
-    (0, peersDb_1.createPeer)("Sc" + userId);
-    return userId.toString();
+    return __awaiter(this, void 0, void 0, function* () {
+        let perrsArray = [];
+        for (let index = 0; index < perrsArray.length; index++) {
+            const element = perrsArray[index];
+            perrsArray.push(element);
+        }
+        const userId = crypto_1.default
+            .createHash("sha256")
+            .update((yield (0, peerIp_1.userIp)()).peerUserIp)
+            .digest("hex");
+        console.log(userId);
+        (0, peersDb_1.createPeer)("Ec" + userId);
+        return userId.toString();
+    });
 }
 exports.createAccount = createAccount;
 createAccount();
