@@ -24,7 +24,7 @@ export async function createAccount(): Promise<string> {
     .digest("hex");
   console.log(userId);
 
-  createPeer("Etr" + userId);
+  createPeer("Ec" + userId);
 
   return userId.toString();
 }
