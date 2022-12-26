@@ -1,4 +1,4 @@
-import { createPeer } from "../utils/peersDb";
+import { createPeer } from "../database/peersDb";
 import { userIp } from "../p2p/peerIp";
 import crypto from "crypto";
 import os from "os";
