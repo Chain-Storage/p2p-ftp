@@ -1,6 +1,7 @@
 import { readFile, readFileSync } from "fs";
 import path from "path";
 import { userIp } from "../p2p/peerIp";
+import crypto from "crypto";
 
 interface IReadFiles {
   peerOne: string | number | any[];
@@ -70,6 +71,12 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
 
   console.log(fileData);
 
+  const fileHash = crypto
+    .createHash("sha256")
+    .update(buffer)
+    .digest("hex") as string;
+  console.log(fileHash);
+
   let peersObject: IReadFiles = {
     peerOne: fileData.slice(0, fileDataLenght1),
     peerTwo: fileData.slice(fileDataLenght1, fileDataLenght2),
@@ -79,7 +86,7 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
     peerSix: fileData.slice(fileDataLenght5, fileDataLenght6),
     peerFile: {
       fileName: fileName,
-      fileHash: "oxrtkgorekg",
+      fileHash: "Ec" + fileHash,
     },
   };
 
