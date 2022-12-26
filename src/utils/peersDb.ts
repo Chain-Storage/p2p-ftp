@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { hostName } from "../accounts/account";
-import { userIp } from "../p2p/getPeers";
+import { userIp } from "../p2p/peerIp";
 import { runDb } from "./runDb";
 
 runDb();
@@ -26,7 +26,7 @@ export async function createPeer(userId: string) {
 
   const user = new User({
     hostName: hostName(),
-    userIp: userIp()[1],
+    userIp: (await userIp()).peerUserIp,
     userId: userId,
   });
 
@@ -36,7 +36,7 @@ export async function createPeer(userId: string) {
 }
 
 async function checkPeer() {
-  const user: any = User.findOne({ userId: userIp()[1] });
+  const user: any = User.findOne({ userId: (await userIp()).peerUserIp });
 
   if (typeof user === "undefined") {
     console.error("This device already have in Db");

@@ -1,10 +1,16 @@
 import { readFile, readFileSync } from "fs";
 import path from "path";
-import { userIp } from "../p2p/getPeers";
+import { userIp } from "../p2p/peerIp";
 
 // ipfs add /fileFolader/file.jpeg
 
-export async function readFiles(pathName: string) {
+interface IReadFiles {
+  peerOne: string;
+  peerTwo: string;
+  peerThree: string;
+}
+
+export async function readFiles(pathName: string): Promise<IReadFiles> {
   const filePath = path.join(pathName);
   const buffer = readFileSync(filePath);
   const fileName = path.basename(pathName);
@@ -12,7 +18,7 @@ export async function readFiles(pathName: string) {
   console.log(fileName);
   console.log(buffer);
 
-  function mySplit(a: Buffer, delimiter: number): any[] {
+  function mySplit(a: Buffer, delimiter: number): number[][] {
     const result = [];
     let currentToken = [];
 
@@ -29,7 +35,7 @@ export async function readFiles(pathName: string) {
     return result;
   }
 
-  const fileData = mySplit(buffer, -1)[0];
+  const fileData: number[] = mySplit(buffer, -1)[0];
   const fileDataLenght1 = Math.trunc(fileData.length / 6);
 
   const fileDataLenght2 =
@@ -57,9 +63,7 @@ export async function readFiles(pathName: string) {
   console.log(fileDataLenght6);
 
   // User Ip Array
-  const userIps: string[] = userIp();
-
-  let peersIpArray: string[] = [userIps[0]];
+  const peersIpArray: string = (await userIp()).peerHostUrl;
 
   // User Ip commnet
   let peersLenghtArray: number[] = [
@@ -72,12 +76,39 @@ export async function readFiles(pathName: string) {
     fileDataLenght6,
   ];
 
+  console.log(fileData.length);
+  let peersDatas: any[] = [];
+
   for (let index = 0; index < peersLenghtArray.length; index++) {
-    const element: any = peersLenghtArray[index];
-    if (fileData.length > 0 || fileData.length < 14) {
-      peersIpArray.push(element);
+    let elementFirst = peersLenghtArray[index] as number;
+    let elementSecond = peersLenghtArray[index + 1] as number;
+
+    console.log(elementFirst, elementSecond);
+
+    if (elementFirst === 0) {
+      for (elementFirst; elementFirst < elementSecond; elementFirst++) {
+        const element = fileData[elementFirst] as number;
+        console.log(element);
+
+        peersDatas.push(element);
+      }
+    } else if (elementFirst > 0) {
+      for (elementFirst + 1; elementFirst < elementSecond; elementFirst++) {
+        const element = fileData[elementFirst] as number;
+        console.log(element);
+
+        peersDatas.push(element);
+      }
     }
   }
+
+  console.log(peersDatas);
+
+  return {
+    peerOne: "fileDataLenght1",
+    peerTwo: "fileDataLenght1",
+    peerThree: "",
+  };
 }
 
 readFiles(__dirname + "/files/.gitignore");

@@ -1,5 +1,5 @@
 import { createPeer } from "../utils/peersDb";
-import { userIp } from "../p2p/getPeers";
+import { userIp } from "../p2p/peerIp";
 import crypto from "crypto";
 import os from "os";
 
@@ -10,7 +10,7 @@ export function hostName(): string {
 }
 
 // İnit Comment
-export function createAccount(): string {
+export async function createAccount(): Promise<string> {
   let perrsArray: string[] = [];
 
   for (let index = 0; index < perrsArray.length; index++) {
@@ -18,7 +18,10 @@ export function createAccount(): string {
     perrsArray.push(element);
   }
 
-  const userId = crypto.createHash("sha256").update(userIp()[1]).digest("hex");
+  const userId = crypto
+    .createHash("sha256")
+    .update((await userIp()).peerUserIp)
+    .digest("hex");
   console.log(userId);
 
   createPeer("Etr" + userId);

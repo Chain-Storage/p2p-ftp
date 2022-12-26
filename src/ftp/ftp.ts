@@ -3,11 +3,11 @@
 import FtpSrv from "ftp-srv";
 import os, { networkInterfaces } from "os";
 import fs from "fs";
-import { userIp } from "../p2p/getPeers";
+import { userIp } from "../p2p/peerIp";
 
 export async function ftp() {
   const ftpServer = new FtpSrv({
-    url: userIp()[0],
+    url: (await userIp()).peerHostUrl,
     anonymous: true,
   });
 
