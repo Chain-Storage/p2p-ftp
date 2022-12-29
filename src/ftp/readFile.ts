@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import crypto from "crypto";
 
-interface IReadFiles {
+export interface IReadFiles {
   peerOne: string | number | any[];
   peerTwo: string | number | any[];
   peerThree: string | number | any[];

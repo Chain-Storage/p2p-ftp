@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/discovery-swarm
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/basic-ftp basic-ftp
 
 PATH: 
   C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin;C:\Program Files\Python310\Scripts\;C:\Program Files\Python310\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk-17.0.4.1\bin;C:\Program Files\MongoDB\Server\6.0\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\PostgreSQL\14\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Amazon\AWSCLIV2\;C:\apache-maven-3.8.6\bin;C:\Program Files\PuTTY\;C:\Program Files\Cloudflare\Cloudflare WARP\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Users\yusuf\AppData\Roaming\Python\Python310\Scripts;C:\Program Files\Go\bin;C:\Users\yusuf\AppData\Local\Microsoft\WindowsApps;C:\Users\yusuf\AppData\Roaming\npm;C:\Users\yusuf\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\yusuf\AppData\Local\Yarn\bin;C:\Users\yusuf\.dotnet\tools;C:\Users\yusuf\go\bin
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fdiscovery-swarm: Not found
+  Error: https://registry.yarnpkg.com/@types%2fbasic-ftp: Not found
       at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66145:18)
       at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -51,21 +51,23 @@ npm manifest:
       "createAccount": "ts-node-dev src/accounts/account.ts",
       "db": "ts-node-dev src/utils/db.ts",
       "readFiles": "ts-node-dev src/ftp/readFile.ts",
+      "sendFiles": "ts-node-dev src/ftp/sendFile.ts",
       "tcp": "ts-node-dev src/tcp/tcp.ts",
       "start": "node dist/app.js",
       "build": "npx tsc",
       "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
     },
     "dependencies": {
+      "@types/ip": "^1.1.0",
       "dat-swarm-defaults": "^1.0.3",
       "discovery-swarm": "^6.1.0",
       "ftp-srv": "^4.6.2",
       "get-port": "^6.1.2",
+      "ip": "^1.1.8",
       "mongoose": "^6.8.1",
       "ws": "^8.11.0"
     },
     "devDependencies": {
-      "@types/ws": "^8.5.3",
       "@types/body-parser": "^1.19.2",
       "@types/compression": "^1.7.2",
       "@types/cors": "^2.8.12",
@@ -81,7 +83,7 @@ npm manifest:
       "@types/nedb": "^1.8.12",
       "@types/node": "^18.11.9",
       "@types/rocksdb": "^3.0.1",
-      "nodemon": "^2.0.20",
+      "@types/ws": "^8.5.3",
       "body-parser": "^1.20.1",
       "compression": "^1.7.4",
       "cors": "^2.8.5",
@@ -93,6 +95,7 @@ npm manifest:
       "level-sublevel": "^6.6.5",
       "morgan": "^1.10.0",
       "nedb": "^1.8.0",
+      "nodemon": "^2.0.20",
       "rocksdb": "^5.2.1",
       "ts-node-dev": "^2.0.0",
       "typescript": "^4.9.3"
@@ -1007,6 +1010,13 @@ Lockfile:
     integrity sha512-BLgsawqFFbS3tFUr+mcBRfst+DumnSfi4PgyNeJAGk0eIxm7lKX1axmHVlbgKNAZS0caZA5/LSopuj0T2LKRPw==
     dependencies:
       "@types/express" "*"
+  
+  "@types/ip@^1.1.0":
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/@types/ip/-/ip-1.1.0.tgz#aec4f5bfd49e4a4c53b590d88c36eb078827a7c0"
+    integrity sha512-dwNe8gOoF70VdL6WJBwVHtQmAX4RMd62M+mAB9HQFjG1/qiCLM/meRy95Pd14FYBbEDwCq7jgJs89cHpLBu4HQ==
+    dependencies:
+      "@types/node" "*"
   
   "@types/level-codec@*":
     version "9.0.1"
@@ -2003,7 +2013,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
     integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
   
-  ip@^1.1.5:
+  ip@^1.1.5, ip@^1.1.8:
     version "1.1.8"
     resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.8.tgz#ae05948f6b075435ed3307acce04629da8cdbf48"
     integrity sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==

@@ -5,6 +5,7 @@ import { runDb } from "./runDb";
 runDb();
 
 interface IFile {
+  userId: string;
   buffer: string;
 }
 
@@ -16,12 +17,16 @@ const fileSchema = new Schema<IFile>({
 // 3. Create a Model.
 const File = model<IFile>("File", fileSchema);
 
-export async function createFile(userId: string) {
+export async function createFile(
+  userId: string,
+  fileData: string | number | any[]
+) {
   // 4. Connect to MongoDB
   await connect("mongodb://localhost:27017/ethursChain");
 
   const file = new File({
-    buffer: readFiles(__dirname + "/files/text.txt"),
+    userId: userId,
+    buffer: fileData,
   });
   await file.save();
 

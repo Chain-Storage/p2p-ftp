@@ -1,18 +1,55 @@
+import { createFile } from "../database/filesDb";
 import { getPeers, IgetPeers } from "../p2p/getPeers";
-import { readFiles } from "./readFile";
+import { sendFilesBuffer } from "./ftpSendBuffer";
+import { IReadFiles, readFiles } from "./readFile";
 
-export async function sendFiles() {
-  readFiles(__dirname + "/files/Notion Setup 2.0.38.exe");
+interface IsendFile {
+  message: string;
+  data: {
+    fileName: string;
+    peers: string[];
+  };
+}
+
+const fileArray: string[] = [
+  "One",
+  "Two",
+  "Three",
+  "Four",
+  "Five",
+  "Six",
+  "File",
+];
+
+export async function sendFiles(): Promise<IsendFile> {
+  const readFile: Promise<IReadFiles> = readFiles(
+    __dirname + "/files/Notion Setup 2.0.38.exe"
+  );
 
   const getPeersData: Promise<IgetPeers> = getPeers();
 
-  const peersUserId = (await getPeers()).userId;
-  const peersUserIp = (await getPeers()).userIp;
+  const peersUserId = (await getPeersData).userId;
+  //const peersUserIp = (await getPeers()).userIp;
 
-  for (let index = 0; index < peersUserId.length; index++) {
-    const element = peersUserId[index];
-    console.log(element);
+  const perr: any[] = peersUserId.split(0, 7);
+
+  for (let index = 0; index < perr.length; index++) {
+    const element = perr[index];
+    const fileArrayElement = fileArray[index];
+
+    console.log(element, fileArrayElement);
+
+    createFile(element, ((await readFile) as any).peer + fileArrayElement);
+    sendFilesBuffer((await readFile).peerFile.fileName, element);
   }
+
+  return {
+    message: "File Sended Succesfully",
+    data: {
+      fileName: (await readFile).peerFile.fileName,
+      peers: [""],
+    },
+  };
 }
 
 sendFiles();
