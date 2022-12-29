@@ -1,6 +1,5 @@
-import { readFile, readFileSync } from "fs";
+import { readFileSync } from "fs";
 import path from "path";
-import { userIp } from "../p2p/peerIp";
 import crypto from "crypto";
 
 interface IReadFiles {
@@ -10,7 +9,10 @@ interface IReadFiles {
   peerFour: string | number | any[];
   peerFive: string | number | any[];
   peerSix: string | number | any[];
-  peerFile: string | any[] | any;
+  peerFile: {
+    fileName: string;
+    fileHash: string;
+  };
 }
 
 export async function readFiles(pathName: string): Promise<IReadFiles> {
