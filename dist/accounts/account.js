@@ -13,10 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createAccount = exports.hostName = void 0;
-const peersDb_1 = require("../utils/peersDb");
+const peersDb_1 = require("../database/peersDb");
 const peerIp_1 = require("../p2p/peerIp");
 const crypto_1 = __importDefault(require("crypto"));
 const os_1 = __importDefault(require("os"));
+const ip_1 = __importDefault(require("ip"));
 function hostName() {
     const computerName = os_1.default.hostname();
     return computerName;
@@ -36,7 +37,19 @@ function createAccount() {
             .digest("hex");
         console.log(userId);
         (0, peersDb_1.createPeer)("Ec" + userId);
-        return userId.toString();
+        const userIps = ip_1.default.address(); // my ip address
+        console.log(`Node ip package ip: ${userIps}`);
+        const ipCheck = ip_1.default.isV4Format(userIps);
+        if (!ipCheck) {
+            console.error("User Ip Wrong");
+            return {
+                data: "null",
+                error: userError,
+            };
+        }
+        return {
+            data: userId.toString(),
+        };
     });
 }
 exports.createAccount = createAccount;

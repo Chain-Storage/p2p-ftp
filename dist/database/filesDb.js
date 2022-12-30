@@ -9,13 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPeers = void 0;
-function getPeers() {
+exports.createFile = void 0;
+const mongoose_1 = require("mongoose");
+const runDb_1 = require("./runDb");
+(0, runDb_1.runDb)();
+// 2. Create a Schema corresponding to the document interface.
+const fileSchema = new mongoose_1.Schema({
+    buffer: { type: String, required: true },
+});
+// 3. Create a Model.
+const File = (0, mongoose_1.model)("File", fileSchema);
+function createFile(userId, fileData) {
     return __awaiter(this, void 0, void 0, function* () {
-        return {
-            userId: "",
-            userIp: "",
-        };
+        // 4. Connect to MongoDB
+        yield (0, mongoose_1.connect)("mongodb://localhost:27017/ethursChain");
+        const file = new File({
+            userId: userId,
+            buffer: fileData,
+        });
+        yield file.save();
+        console.log(file);
     });
 }
-exports.getPeers = getPeers;
+exports.createFile = createFile;

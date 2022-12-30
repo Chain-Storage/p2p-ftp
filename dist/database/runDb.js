@@ -9,13 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPeers = void 0;
-function getPeers() {
+exports.runDb = void 0;
+const mongoose_1 = require("mongoose");
+function runDb() {
     return __awaiter(this, void 0, void 0, function* () {
-        return {
-            userId: "",
-            userIp: "",
-        };
+        // 4. Connect to MongoDB
+        yield (0, mongoose_1.connect)("mongodb://localhost:27017/ethursChain")
+            .then((data) => {
+            console.log("Database run succesfully");
+        })
+            .catch((err) => {
+            console.log(err);
+        });
     });
 }
-exports.getPeers = getPeers;
+exports.runDb = runDb;
