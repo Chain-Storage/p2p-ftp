@@ -31,7 +31,7 @@ export async function sendFiles(): Promise<IsendFile> {
   const peersUserId = (await getPeersData).userId;
   //const peersUserIp = (await getPeers()).userIp;
 
-  const perr: any[] = peersUserId.split(0, 7);
+  const perr: any[] = peersUserId.slice(0, 7);
 
   for (let index = 0; index < perr.length; index++) {
     const element = perr[index];

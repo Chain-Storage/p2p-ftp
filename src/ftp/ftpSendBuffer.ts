@@ -1,7 +1,9 @@
 import { ftp } from "./ftp";
-import * as ftps from "basic-ftp";
+import * as ftpClient from "basic-ftp";
+import fs from "fs";
+import { hostName } from "../accounts/account";
 
-ftp();
+//ftp();
 
 interface IsendFilesBuffer {
   message: string;
@@ -15,19 +17,23 @@ export async function sendFilesBuffer(
   fileName: string,
   buffer: string
 ): Promise<IsendFilesBuffer> {
-  const client = new ftps.Client();
+  const client = new ftpClient.Client();
 
   client.ftp.verbose = true;
 
-  await client.access({
+  (await client.access({
     host: `${process.env.HOST}`,
     port: Number(process.env.PORT),
-    user: "yurikaza",
+    user: hostName(),
     password: `${process.env.PASSWORD}`,
     secure: false,
-  });
+  })) as unknown as Promise<ftpClient.FTPResponse>;
 
-  client.uploadFrom(fileName, buffer);
+  fs.writeFile(fileName, buffer, (data: any): void => {
+    console.log(data);
+
+    client.uploadFrom(fileName, data);
+  });
 
   return {
     message: "file sended to peer",
