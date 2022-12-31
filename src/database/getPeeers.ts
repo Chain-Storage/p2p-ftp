@@ -1,5 +1,6 @@
 import { connect, model, Schema } from "mongoose";
 import dotenv from "dotenv";
+import { User } from "./peersDb";
 
 export async function runDbWeb() {
   dotenv.config();
@@ -13,23 +14,7 @@ export async function runDbWeb() {
     });
 }
 
-interface IUser {
-  hostName: string;
-  userIp: string;
-  userId: string;
-}
-
-// 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<IUser>({
-  hostName: { type: String, required: true },
-  userIp: { type: String, required: true },
-  userId: { type: String, required: true },
-});
-
-// 3. Create a Model.
-const User = model<IUser>("Userrr", userSchema);
-
-export async function getPeers(): Promise<any> {
+export async function getPeersDb(): Promise<any> {
   const user: any = User.find();
 
   if (typeof user === "undefined") {

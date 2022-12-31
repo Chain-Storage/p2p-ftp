@@ -15,16 +15,18 @@ interface IsendFilesBuffer {
 
 export async function sendFilesBuffer(
   fileName: string,
-  buffer: string
+  buffer: string,
+  hostName: string,
+  hostIp: string
 ): Promise<IsendFilesBuffer> {
   const client = new ftpClient.Client();
 
   client.ftp.verbose = true;
 
   (await client.access({
-    host: `${process.env.HOST}`,
+    host: hostIp,
     port: Number(process.env.PORT),
-    user: hostName(),
+    user: hostName,
     password: `${process.env.PASSWORD}`,
     secure: false,
   })) as unknown as Promise<ftpClient.FTPResponse>;

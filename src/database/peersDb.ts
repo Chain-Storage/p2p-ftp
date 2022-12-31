@@ -19,7 +19,7 @@ const userSchema = new Schema<IUser>({
 });
 
 // 3. Create a Model.
-const User = model<IUser>("User", userSchema);
+export const User = model<IUser>("User", userSchema);
 
 async function checkPeer() {
   const user: any = User.findOne({ userId: (await userIp()).peerUserIp });

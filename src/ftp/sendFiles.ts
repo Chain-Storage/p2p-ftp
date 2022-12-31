@@ -28,10 +28,10 @@ export async function sendFiles(): Promise<IsendFile> {
 
   const getPeersData: Promise<IgetPeers> = getPeers();
 
-  const peersUserId = (await getPeersData).userId;
+  const peersUserId: string[] = (await getPeersData).data;
   //const peersUserIp = (await getPeers()).userIp;
 
-  const perr: any[] = peersUserId.slice(0, 7);
+  const perr: any = peersUserId.slice(0, 7);
 
   for (let index = 0; index < perr.length; index++) {
     const element = perr[index];
@@ -40,7 +40,11 @@ export async function sendFiles(): Promise<IsendFile> {
     console.log(element, fileArrayElement);
 
     createFile(element, ((await readFile) as any).peer + fileArrayElement);
-    sendFilesBuffer((await readFile).peerFile.fileName, element);
+    sendFilesBuffer(
+      (await readFile).peerFile.fileName,
+      element,
+      element.hostName
+    );
   }
 
   return {
