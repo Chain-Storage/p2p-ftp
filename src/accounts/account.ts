@@ -35,7 +35,7 @@ export async function createAccount(): Promise<IcreateAccount> {
   createPeer("Ec" + userId);
 
   const userIps = ip.address(); // my ip address
-  console.log(`Node ip package ip: ${userIps}`);
+  console.log(`Node ip: ${userIps}`);
 
   const ipCheck = ip.isV4Format(userIps);
 
