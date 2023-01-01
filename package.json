@@ -22,7 +22,7 @@
     "createAccount": "ts-node-dev src/accounts/account.ts",
     "db": "ts-node-dev src/utils/db.ts",
     "readFiles": "ts-node-dev src/ftp/readFile.ts",
-    "sendFiles": "ts-node-dev src/ftp/sendFile.ts",
+    "sendFiles": "ts-node-dev src/ftp/sendFiles.ts",
     "tcp": "ts-node-dev src/tcp/tcp.ts",
     "start": "node dist/app.js",
     "build": "npx tsc",

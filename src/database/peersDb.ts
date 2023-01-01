@@ -1,9 +1,21 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, connect } from "mongoose";
 import { hostName } from "../accounts/account";
 import { userIp } from "../p2p/peerIp";
-import { runDbWeb } from "./getPeeers";
+import dotenv from "dotenv";
 
-runDbWeb();
+async function rundbweb() {
+  dotenv.config();
+  // 4. Connect to MongoDB
+  await connect(`${process.env.MONGODB}`)
+    .then(() => {
+      console.log("Database run succesfully");
+    })
+    .catch((err: Error) => {
+      console.log(err);
+    });
+}
+
+rundbweb();
 
 interface IUser {
   hostName: string;

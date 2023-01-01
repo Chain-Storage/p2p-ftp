@@ -15,21 +15,23 @@ interface IsendFilesBuffer {
 
 export async function sendFilesBuffer(
   fileName: string,
-  buffer: string,
+  buffer: string | Buffer | any,
   hostName: string,
   hostIp: string
-): Promise<IsendFilesBuffer> {
+) {
+  console.log("sendFilesBuffer Function Started");
+
   const client = new ftpClient.Client();
 
   client.ftp.verbose = true;
 
-  (await client.access({
+  await client.access({
     host: hostIp,
     port: Number(process.env.PORT),
     user: hostName,
     password: `${process.env.PASSWORD}`,
     secure: false,
-  })) as unknown as Promise<ftpClient.FTPResponse>;
+  });
 
   fs.writeFile(fileName, buffer, (data: any): void => {
     console.log(data);
@@ -37,6 +39,7 @@ export async function sendFilesBuffer(
     client.uploadFrom(fileName, data);
   });
 
+  /*
   return {
     message: "file sended to peer",
     data: {
@@ -44,4 +47,5 @@ export async function sendFilesBuffer(
       peers: [],
     },
   };
+  */
 }

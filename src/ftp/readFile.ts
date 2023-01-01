@@ -73,6 +73,7 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
 
   console.log(fileData);
 
+  // Hash will be upadte for create with file buffer
   const fileHash = crypto
     .createHash("sha256")
     .update(buffer)
