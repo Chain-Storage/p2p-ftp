@@ -16,7 +16,7 @@ async function sendFiles(): Promise<IsendFile> {
   console.log("sendFiles Function Started");
 
   const readFile: Promise<IReadFiles> = readFiles(
-    __dirname + "/files/Notion Setup 2.0.38.exe"
+    __dirname + "/files/.gitignore"
   );
 
   const fileArray: any[] = [
@@ -31,28 +31,31 @@ async function sendFiles(): Promise<IsendFile> {
   console.log("peers calling..");
   const getPeersData: Promise<IgetPeers> = getPeers();
 
-  const peersUserId: string[] = (await getPeersData).data;
+  const peersUserId: string[] = (await getPeersData).userIpData;
+  const peersUserName: string[] = (await getPeersData).hostNameData;
   //const peersUserIp = (await getPeers()).userIp;
 
   // This code will be update in the feature for sending files under the 6 peers
   const perr: any = peersUserId.slice(0, 6);
+  const perrName: any = peersUserName.slice(0, 6);
 
   console.log(perr, peersUserId, getPeersData);
 
   for (let index = 0; index < perr.length; index++) {
     console.log("Send Peers Buffer Loop Start");
 
-    const element = perr[index];
+    const userIp = perr[index];
+    const hostName = perrName[index];
     const fileArrayElement = fileArray[index];
 
-    console.log(element, fileArrayElement);
+    console.log(userIp.userIp, fileArrayElement);
 
     //createFile(element, ((await readFile) as any).peer + fileArrayElement);
     sendFilesBuffer(
       (await readFile).peerFile.fileHash + `-${index}`,
       fileArrayElement,
-      element.hostName,
-      element.userIp
+      hostName,
+      userIp
     );
     console.log("File Sending...");
   }

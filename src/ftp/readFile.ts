@@ -97,5 +97,3 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
 
   return peersObject;
 }
-
-readFiles(__dirname + "/files/Notion Setup 2.0.38.exe");

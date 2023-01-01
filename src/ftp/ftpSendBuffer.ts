@@ -33,7 +33,9 @@ export async function sendFilesBuffer(
     secure: false,
   });
 
-  fs.writeFile(fileName, buffer, (data: any): void => {
+  const fileBuffer = Buffer.from(buffer);
+
+  fs.writeFile(fileName, fileBuffer, (data: any): void => {
     console.log(data);
 
     client.uploadFrom(fileName, data);
