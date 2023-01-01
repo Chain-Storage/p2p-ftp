@@ -3,7 +3,7 @@ import fs from "fs";
 async function getFiles(fileHash: string) {
   let fileData: any[] = [];
 
-  for (let index = 0; index < 6; index++) {
+  for (let index: number = 0; index < 6; index++) {
     fs.readFile(
       __dirname + `/files/${fileHash}-${index}`,
       {
