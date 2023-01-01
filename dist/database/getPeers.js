@@ -12,13 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPeer = exports.User = void 0;
+exports.getPeersDb = exports.rundbweb = void 0;
 const mongoose_1 = require("mongoose");
-const account_1 = require("../accounts/account");
-const peerIp_1 = require("../p2p/peerIp");
 const dotenv_1 = __importDefault(require("dotenv"));
+const peersDb_1 = require("./peersDb");
 function rundbweb() {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("rundbweb Function Started");
         dotenv_1.default.config();
         // 4. Connect to MongoDB
         yield (0, mongoose_1.connect)(`${process.env.MONGODB}`)
@@ -30,35 +30,17 @@ function rundbweb() {
         });
     });
 }
-rundbweb();
-// 2. Create a Schema corresponding to the document interface.
-const userSchema = new mongoose_1.Schema({
-    hostName: { type: String, required: true },
-    userIp: { type: String, required: true },
-    userId: { type: String, required: true },
-});
-// 3. Create a Model.
-exports.User = (0, mongoose_1.model)("User", userSchema);
-function checkPeer() {
+exports.rundbweb = rundbweb;
+function getPeersDb() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = exports.User.findOne({ userId: (yield (0, peerIp_1.userIp)()).peerUserIp });
+        rundbweb();
+        const user = peersDb_1.User.find();
         if (typeof user === "undefined") {
-            console.error("This device already have in Db");
+            console.error("This device already in the Db");
             return false;
         }
-        console.log(user);
+        console.log(user.userIp);
+        return user;
     });
 }
-function createPeer(userId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        checkPeer();
-        const user = new exports.User({
-            hostName: (0, account_1.hostName)(),
-            userIp: (yield (0, peerIp_1.userIp)()).peerUserIp,
-            userId: userId,
-        });
-        yield user.save();
-        console.log(user);
-    });
-}
-exports.createPeer = createPeer;
+exports.getPeersDb = getPeersDb;

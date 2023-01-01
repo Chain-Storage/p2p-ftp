@@ -38,7 +38,7 @@ function createAccount() {
         console.log(userId);
         (0, peersDb_1.createPeer)("Ec" + userId);
         const userIps = ip_1.default.address(); // my ip address
-        console.log(`Node ip package ip: ${userIps}`);
+        console.log(`Node ip: ${userIps}`);
         const ipCheck = ip_1.default.isV4Format(userIps);
         if (!ipCheck) {
             console.error("User Ip Wrong");

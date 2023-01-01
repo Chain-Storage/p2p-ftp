@@ -38,29 +38,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendFilesBuffer = void 0;
 const ftpClient = __importStar(require("basic-ftp"));
 const fs_1 = __importDefault(require("fs"));
-const account_1 = require("../accounts/account");
-function sendFilesBuffer(fileName, buffer) {
+function sendFilesBuffer(fileName, buffer, hostName, hostIp) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("sendFilesBuffer Function Started");
         const client = new ftpClient.Client();
         client.ftp.verbose = true;
-        (yield client.access({
-            host: `${process.env.HOST}`,
+        yield client.access({
+            host: hostIp,
             port: Number(process.env.PORT),
-            user: (0, account_1.hostName)(),
+            user: hostName,
             password: `${process.env.PASSWORD}`,
             secure: false,
-        }));
-        fs_1.default.writeFile(fileName, buffer, (data) => {
+        });
+        const fileBuffer = Buffer.from(buffer);
+        fs_1.default.writeFile(fileName, fileBuffer, (data) => {
             console.log(data);
             client.uploadFrom(fileName, data);
         });
+        /*
         return {
-            message: "file sended to peer",
-            data: {
-                fileName: "",
-                peers: [],
-            },
+          message: "file sended to peer",
+          data: {
+            fileName: "",
+            peers: [],
+          },
         };
+        */
     });
 }
 exports.sendFilesBuffer = sendFilesBuffer;

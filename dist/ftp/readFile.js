@@ -60,6 +60,7 @@ function readFiles(pathName) {
             fileDataLenght6,
         ];
         console.log(fileData);
+        // Hash will be upadte for create with file buffer
         const fileHash = crypto_1.default
             .createHash("sha256")
             .update(buffer)
@@ -82,4 +83,3 @@ function readFiles(pathName) {
     });
 }
 exports.readFiles = readFiles;
-readFiles(__dirname + "/files/Notion Setup 2.0.38.exe");
