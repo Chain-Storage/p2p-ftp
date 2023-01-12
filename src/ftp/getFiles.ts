@@ -105,6 +105,6 @@ export async function getFiles(
 }
 
 getFiles(
-  "Ecb63dfc5f50b4e447d706a3e549df2ef15228cc80189b976b475a2beeb84904bb",
-  ".gitignore"
+  "Ec3fe4c1dda5aa86b1abecb8d4478c1057bd69d43b82086ff995aae1149cff6927",
+  "Hands-on-blockchain.pdf"
 );

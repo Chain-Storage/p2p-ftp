@@ -17,7 +17,7 @@ async function sendFiles(): Promise<IsendFile> {
   console.log("sendFiles Function Started");
 
   const readFile: Promise<IReadFiles> = readFiles(
-    __dirname + "/files/.gitignore"
+    __dirname + "/files/Hands-on-blockchain.pdf"
   );
 
   const fileArray: any[] = [

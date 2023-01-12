@@ -105,4 +105,4 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
   return peersObject;
 }
 
-readFiles(__dirname + "/files/.gitignore");
+readFiles(__dirname + "/files/Hands-on-blockchain.pdf");
