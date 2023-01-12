@@ -7,5 +7,5 @@ yarn-rror.log
 useAccount
 files
 
-src/ftp/download/*
+src/ftp/download
 src/ftp/files/*
