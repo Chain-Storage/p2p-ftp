@@ -1,8 +1,11 @@
-# Node.js Files
+# Node.js File
 node_modules
 .env
-yarn-error.log
+yarn-rror.log
 
-# Database
-userAccount
+#Database
+useAccount
 files
+
+src/ftp/download/*
+src/ftp/files/*

@@ -8,29 +8,34 @@ export interface IgetPeers {
   hostNameData: string[];
 }
 
+console.log("getPeers Function Started");
+
+dotenv.config();
+// 4. Connect to MongoDB
+async function dataBase() {
+  await connect(`${process.env.MONGODB}`);
+}
+
+dataBase();
+
+interface IUser {
+  hostName: string;
+  userIp: string;
+  userId: string;
+}
+
+// 2. Create a Schema corresponding to the document interface.
+const userSchema = new Schema<IUser>({
+  hostName: { type: String, required: true },
+  userIp: { type: String, required: true },
+  userId: { type: String, required: true },
+});
+
+// 3. Create a Model.
+export const User = model<IUser>("User", userSchema);
+
 // This Function will be update in the feature for sending files under the 6 peers
 export async function getPeers(): Promise<IgetPeers> {
-  console.log("getPeers Function Started");
-
-  dotenv.config();
-  // 4. Connect to MongoDB
-  await connect(`${process.env.MONGODB}`);
-
-  interface IUser {
-    hostName: string;
-    userIp: string;
-    userId: string;
-  }
-
-  // 2. Create a Schema corresponding to the document interface.
-  const userSchema = new Schema<IUser>({
-    hostName: { type: String, required: true },
-    userIp: { type: String, required: true },
-    userId: { type: String, required: true },
-  });
-
-  // 3. Create a Model.
-  const User = model<IUser>("User", userSchema);
   const user: any = await User.find({});
 
   console.log(user);

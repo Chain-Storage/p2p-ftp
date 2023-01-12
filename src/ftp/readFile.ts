@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { createReadStream, readFileSync } from "fs";
 import path from "path";
 import crypto from "crypto";
 
@@ -23,6 +23,13 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
   console.log(fileName);
   console.log(buffer);
 
+  const readStream = createReadStream(fileName, {
+    start: 0,
+    end: 256,
+  });
+
+  console.log(readStream);
+
   function mySplit(a: Buffer, delimiter: number): number[][] {
     const result = [];
     let currentToken = [];
@@ -41,21 +48,21 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
   }
 
   const fileData: number[] = mySplit(buffer, -1)[0];
-  const fileDataLenght1 = Math.trunc(fileData.length / 6);
+  let fileDataLenght1 = Math.trunc(fileData.length / 6);
 
-  const fileDataLenght2 =
+  let fileDataLenght2 =
     Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght1);
 
-  const fileDataLenght3 =
+  let fileDataLenght3 =
     Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght2);
 
-  const fileDataLenght4 =
+  let fileDataLenght4 =
     Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght3);
 
-  const fileDataLenght5 =
+  let fileDataLenght5 =
     Math.trunc(fileData.length / 6) + Math.trunc(fileDataLenght4);
 
-  const fileDataLenght6 = fileData.length;
+  let fileDataLenght6 = fileData.length;
 
   // User Ip Array
   //const peersIpArray: string = (await userIp()).peerHostUrl;
@@ -82,11 +89,11 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
 
   let peersObject: IReadFiles = {
     peerOne: fileData.slice(0, fileDataLenght1),
-    peerTwo: fileData.slice(fileDataLenght1, fileDataLenght2),
-    peerThree: fileData.slice(fileDataLenght2, fileDataLenght3),
-    peerFour: fileData.slice(fileDataLenght3, fileDataLenght4),
-    peerFive: fileData.slice(fileDataLenght4, fileDataLenght5),
-    peerSix: fileData.slice(fileDataLenght5, fileDataLenght6),
+    peerTwo: fileData.slice(++fileDataLenght1, fileDataLenght2),
+    peerThree: fileData.slice(++fileDataLenght2, fileDataLenght3),
+    peerFour: fileData.slice(++fileDataLenght3, fileDataLenght4),
+    peerFive: fileData.slice(++fileDataLenght4, fileDataLenght5),
+    peerSix: fileData.slice(++fileDataLenght5, fileDataLenght6),
     peerFile: {
       fileName: fileName,
       fileHash: "Ec" + fileHash,
@@ -97,3 +104,5 @@ export async function readFiles(pathName: string): Promise<IReadFiles> {
 
   return peersObject;
 }
+
+readFiles(__dirname + "/files/.gitignore");

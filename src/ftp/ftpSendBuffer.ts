@@ -18,7 +18,7 @@ export async function sendFilesBuffer(
   buffer: string | Buffer | any,
   hostName: string,
   hostIp: string
-) {
+): Promise<void> {
   console.log("sendFilesBuffer Function Started");
 
   const client = new ftpClient.Client();

@@ -28,6 +28,7 @@
     "tcp": "ts-node-dev src/tcp/tcp.ts",
     "start": "node dist/app.js",
     "build": "npx tsc",
+    "fsTest": "ts-node-dev src/test/fsReadFile.ts",
     "dev:build": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "dependencies": {
